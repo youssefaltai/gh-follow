@@ -19,10 +19,20 @@ Run the following:
 git clone https://github.com/youssef-attai/gh-follow-followers.git
 cd gh-follow-followers
 npm install
+touch .env
+```
+Edit the `.env` file to have the following content:
+
+```
+TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN>
 ```
 
-Uncomment the last two lines in `index.js`, then:
+*Replace <YOUR_PERSONAL_ACCESS_TOKEN> with your acutal personal access token*
+
+Uncomment the last two lines in `index.js`, then run:
 
 ```
 node index.js
 ```
+
+⚠  **Running `unfollowAll()` will make you unfollow all the users you are following.**

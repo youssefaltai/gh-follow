@@ -1,6 +1,10 @@
 import fetch from "node-fetch";
+import * as dotenv from "dotenv";
+dotenv.config()
 
 const token = process.env.TOKEN;
+
+console.log("TOKEN:", token);
 
 async function unfollow(username) {
   const response = await fetch(
@@ -47,7 +51,7 @@ async function getFollowers() {
     },
   });
   const followers = await response.json();
-  console.log(`Followers: ${followers}`);
+  console.log(`Followers: ${followers.message}`);
 
   return followers;
 }
@@ -68,7 +72,7 @@ async function follow(username) {
 
 async function followAllFollowers() {
   const followers = await getFollowers();
-  followers.forEach(async (user) => {
+    followers.forEach(async (user) => {
     await follow(user.login);
   });
 }
