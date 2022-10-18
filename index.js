@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-const token = "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";
+const token = process.env.TOKEN;
 
 async function unfollow(username) {
   const response = await fetch(
