@@ -1,6 +1,6 @@
 # GHFollow
 
-An automation tool for people obsessed with their GitHub followers.
+For those who are obsessed with their GitHub followers.
 
 ### How to use
 
