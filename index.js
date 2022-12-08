@@ -116,15 +116,8 @@ const followFollowers = async () => {
   }
 };
 
-// writeJson('following', await getAll(following));
-// writeJson('followers', await getAll(followers));
-
-// console.log(readJson('following').length);
-// console.log(readJson('followers').length);
-
-// console.log(await doTheyFollowMe("FatmaKMohamed"));
-// console.log(await doTheyFollowMe("torvalds"));
-// console.log(await doIFollowThem("torvalds"));
-
-await unfollowNonFollowers();
-await followFollowers();
+console.log(
+  `Linus Torvalds ${
+    (await doTheyFollowMe("torvalds")) ? "follows" : "does NOT follow"
+  } you`
+);
