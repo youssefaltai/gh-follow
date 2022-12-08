@@ -1,10 +1,10 @@
-import axios from "axios";
-import * as dotenv from "dotenv";
+const axios = require("axios");
+const dotenv = require("dotenv");
 dotenv.config();
 
 const GH_FOLLOW = process.env.GH_FOLLOW;
 
-export class GHFollow {
+exports.GHFollow = class GHFollow {
   constructor(me) {
     this.me = me;
 
@@ -130,4 +130,4 @@ export class GHFollow {
       await this.follow(allFollowers[i]);
     }
   };
-}
+};
