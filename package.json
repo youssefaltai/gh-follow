@@ -1,6 +1,6 @@
 {
   "name": "ghfollow",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "For those who are obsessed with their GitHub followers.",
   "type": "commonjs",
   "main": "GHFollow.js",
