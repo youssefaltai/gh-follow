@@ -10,7 +10,19 @@ First, install the package
 npm i ghfollow
 ```
 
-Then, import the `GHFollow` class using:
+Then, make an environment variable named `GH_FOLLOW` and set it's value to your [GitHub personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token). **(Make sure you check `user:follow` when generating your token)**
+
+One way of making an environment variable is to add it to a file named `.env` in your project's working directory. Your `.env` file should look like this:
+
+```
+ENVIRONMENT_VARIALE_1=SOME_VALUE
+ENVIRONMENT_VARIALE_2=SOME_OTHER_VALUE
+GH_FOLLOW=<YOUR_PERSONAL_ACCESS_TOKEN>
+```
+
+where `<YOUR_PERSONAL_ACCESS_TOKEN>` is your actual GitHub token.
+
+Now, import the `GHFollow` class using:
 
 ```
 import { GHFollow } from "ghfollow";
