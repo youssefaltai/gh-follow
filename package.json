@@ -1,14 +1,14 @@
 {
-  "name": "github-followers",
-  "version": "1.0.0",
-  "description": "",
+  "name": "ghfollow",
+  "version": "1.0.1",
+  "description": "For those who are obsessed with their GitHub followers.",
   "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node ."
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["github", "api", "followers"],
+  "author": "youssefattai",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.2.1",
