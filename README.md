@@ -4,9 +4,17 @@ For those who are obsessed with their GitHub followers.
 
 ### How to use
 
-First, create an instance of `GHFollow` and pass it your GitHub username
+First, install the package
 
 ```
+npm i ghfollow
+```
+
+Then, create an instance of `GHFollow` and pass it your GitHub username
+
+```
+import { GHFollow } from "./GHFollow.js";
+
 const ghf = new GHFollow(yourUsername);
 ```
 
