@@ -1,38 +1,53 @@
-## Follow your followers
+# GHFollow
 
-This is a tool written in Javascript (Node.js) that automates 
-unfollowing all users you follow and following all your followers instead,
-using GitHub's API.
+An automation tool for people obsessed with their GitHub followers.
 
-⚠ **Following your followers does not work properly.
-The function `followAllFollowers()` follows most followers,
-but not all of them.**
+### Examples of what you can do
 
-If you have any idea why this happens,
-I would really appreciate your help.
-
-### How to use
-
-Run the following:
+- Get the usernames of your followers
 
 ```
-git clone https://github.com/youssef-attai/gh-follow-followers.git
-cd gh-follow-followers
-npm install
-touch .env
-```
-Edit the `.env` file to have the following content:
-
-```
-TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN>
+const allFollowers = await getAll(followers);
 ```
 
-*Replace <YOUR_PERSONAL_ACCESS_TOKEN> with your acutal personal access token*
-
-Uncomment the last two lines in `index.js`, then run:
+- Get the usernames of those who you follow
 
 ```
-node index.js
+const allFollowing = await getAll(following);
 ```
 
-⚠  **Running `unfollowAll()` will make you unfollow all the users you are following.**
+- Follow a user
+
+```
+await follow(username);
+```
+
+- Unfollow a user
+
+```
+await unfollow(username);
+```
+
+- Check if you follow a user
+
+```
+await doIFollowThem(username);
+```
+
+- Check if a user follows you
+
+```
+await doTheyFollowMe(username);
+```
+
+- Unfollow those who are not following you
+
+```
+await unfollowNonFollowers();
+```
+
+- Follow all your followers
+
+```
+await followFollowers();
+```

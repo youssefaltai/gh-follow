@@ -1,82 +1,130 @@
-import fetch from "node-fetch";
+import axios from "axios";
+import fs from "fs";
 import * as dotenv from "dotenv";
-dotenv.config()
+dotenv.config();
 
-const token = process.env.TOKEN;
+const GH_FOLLOW = process.env.GH_FOLLOW;
+const ME = process.env.ME;
 
-console.log("TOKEN:", token);
+const githubUser = axios.create({
+  baseURL: "https://api.github.com/user",
+  headers: {
+    Accept: "application/vnd.github+json",
+    Authorization: `Bearer ${GH_FOLLOW}`,
+    "X-GitHub-Api-Version": "2022-11-28",
+  },
+});
 
-async function unfollow(username) {
-  const response = await fetch(
-    `https://api.github.com/user/following/${username}`,
-    {
-      method: "DELETE",
-      headers: {
-        Accept: "application/vnd.github+json",
-        Authorization: `Bearer ${token}`,
-      },
+const githubUsers = axios.create({
+  baseURL: "https://api.github.com/users",
+  headers: {
+    Accept: "application/vnd.github+json",
+    Authorization: `Bearer ${GH_FOLLOW}`,
+    "X-GitHub-Api-Version": "2022-11-28",
+  },
+});
+
+const doTheyFollowMe = async (username) => {
+  let s;
+  try {
+    s = await githubUsers.get(`${username}/following/${ME}`);
+    s = s.status;
+  } catch (err) {
+    s = err.response.status;
+  }
+  return s === 204;
+};
+
+const doIFollowThem = async (username) => {
+  let s;
+  try {
+    s = await githubUsers.get(`${ME}/following/${username}`);
+    s = s.status;
+  } catch (err) {
+    s = err.response.status;
+  }
+  return s === 204;
+};
+
+const followers = async (page) => {
+  const { data } = await githubUser.get("/followers", { params: { page } });
+  return data.map((user) => user.login);
+};
+
+const following = async (page) => {
+  const { data } = await githubUser.get("/following", { params: { page } });
+  return data.map((user) => user.login);
+};
+
+const getAll = async (func) => {
+  let page = 1;
+  const allData = [];
+
+  let data = await func(page);
+  allData.push(...data);
+  page++;
+
+  while (data.length !== 0) {
+    data = await func(page);
+    allData.push(...data);
+    page++;
+  }
+  return allData;
+};
+
+const unfollow = async (username) => {
+  try {
+    await githubUser.delete(`/following/${username}`);
+    console.log(`Unfollowed ${username}`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const follow = async (username) => {
+  try {
+    await githubUser.put(`/following/${username}`);
+    console.log(`Followed ${username}`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const writeJson = (filename, data) => {
+  fs.writeFileSync(`${filename}.json`, JSON.stringify(data));
+};
+
+const readJson = (filename) => {
+  return JSON.parse(fs.readFileSync(`${filename}.json`));
+};
+
+const unfollowNonFollowers = async () => {
+  const allFollowing = await getAll(following);
+
+  for (let i = 0; i < allFollowing.length; i++) {
+    if (!(await doTheyFollowMe(allFollowing[i]))) {
+      await unfollow(allFollowing[i]);
     }
-  );
-  console.log(`Unfollowed ${username}`);
-}
+  }
+};
 
-async function getFollowing() {
-  const response = await fetch("https://api.github.com/user/following", {
-    method: "GET",
-    headers: {
-      Accept: "application/vnd.github+json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+const followFollowers = async () => {
+  const allFollowers = await getAll(followers);
 
-  const following = await response.json();
-  console.log(`Following: ${following}`);
+  for (let i = 0; i < allFollowers.length; i++) {
+    await follow(allFollowers[i]);
+  }
+};
 
-  return following;
-}
+// writeJson('following', await getAll(following));
+// writeJson('followers', await getAll(followers));
 
-async function unfollowAll() {
-  const following = await getFollowing();
-  following.forEach(async (user) => {
-    await unfollow(user.login);
-  });
-}
+// console.log(readJson('following').length);
+// console.log(readJson('followers').length);
 
-async function getFollowers() {
-  const response = await fetch("https://api.github.com/user/followers", {
-    method: "GET",
-    headers: {
-      Accept: "application/vnd.github+json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const followers = await response.json();
-  console.log(`Followers: ${followers.message}`);
+// console.log(await doTheyFollowMe("FatmaKMohamed"));
+// console.log(await doTheyFollowMe("torvalds"));
+// console.log(await doIFollowThem("torvalds"));
 
-  return followers;
-}
-
-async function follow(username) {
-  const response = await fetch(
-    `https://api.github.com/user/following/${username}`,
-    {
-      method: "PUT",
-      headers: {
-        Accept: "application/vnd.github+json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  console.log(`Followed ${username}`);
-}
-
-async function followAllFollowers() {
-  const followers = await getFollowers();
-    followers.forEach(async (user) => {
-    await follow(user.login);
-  });
-}
-
-
-// await unfollowAll();
-// await followAllFollowers();
+await unfollowNonFollowers();
+await followFollowers();
