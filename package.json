@@ -2,11 +2,8 @@
   "name": "ghfollow",
   "version": "1.0.1",
   "description": "For those who are obsessed with their GitHub followers.",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "start": "node ."
-  },
+  "type": "commonjs",
+  "main": "GHFollow.js",
   "keywords": ["github", "api", "followers"],
   "author": "youssefattai",
   "license": "ISC",

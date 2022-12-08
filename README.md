@@ -13,9 +13,9 @@ npm i ghfollow
 Then, create an instance of `GHFollow` and pass it your GitHub username
 
 ```
-import { GHFollow } from "./GHFollow.js";
+const { GHFollow } = require("./GHFollow.js");
 
-const ghf = new GHFollow(yourUsername);
+const ghf = new GHFollow("youssef-attai");
 ```
 
 Now, here is a list of what you can do
