@@ -2,52 +2,60 @@
 
 An automation tool for people obsessed with their GitHub followers.
 
-### Examples of what you can do
+### How to use
+
+First, create an instance of `GHFollow` and pass it your GitHub username
+
+```
+const ghf = new GHFollow(yourUsername);
+```
+
+Now, here is a list of what you can do
 
 - Get the usernames of your followers
 
 ```
-const allFollowers = await getAll(followers);
+await ghf.getAllFollowers();
 ```
 
 - Get the usernames of those who you follow
 
 ```
-const allFollowing = await getAll(following);
+await ghf.getAllFollowing();
 ```
 
 - Follow a user
 
 ```
-await follow(username);
+await ghf.follow(username);
 ```
 
 - Unfollow a user
 
 ```
-await unfollow(username);
+await ghf.unfollow(username);
 ```
 
 - Check if you follow a user
 
 ```
-await doIFollowThem(username);
+await ghf.doIFollowThem(username);
 ```
 
 - Check if a user follows you
 
 ```
-await doTheyFollowMe(username);
+await ghf.doTheyFollowMe(username);
 ```
 
 - Unfollow those who are not following you
 
 ```
-await unfollowNonFollowers();
+await ghf.unfollowNonFollowers();
 ```
 
 - Follow all your followers
 
 ```
-await followFollowers();
+await ghf.followFollowers();
 ```
