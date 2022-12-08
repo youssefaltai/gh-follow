@@ -10,11 +10,21 @@ First, install the package
 npm i ghfollow
 ```
 
-Then, create an instance of `GHFollow` and pass it your GitHub username
+Then, import the `GHFollow` class using:
+
+```
+import { GHFollow } from "ghfollow";
+```
+
+or (For CommonJS)
 
 ```
 const { GHFollow } = require("./GHFollow.js");
+```
 
+Then, create an instance of `GHFollow`, and pass it your GitHub username
+
+```
 const ghf = new GHFollow("youssef-attai");
 ```
 
