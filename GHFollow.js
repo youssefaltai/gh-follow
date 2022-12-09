@@ -133,10 +133,10 @@ exports.GHFollow = class GHFollow {
   };
 
   writeJson = (filename, data) => {
-    fs.writeFile(`${filename}.json`, JSON.stringify(data));
+    fs.writeFileSync(`${filename}.json`, JSON.stringify(data));
   };
 
   readJson = (filename) => {
-    return JSON.parse(fs.readFile(`${filename}.json`));
+    return JSON.parse(fs.readFileSync(`${filename}.json`));
   };
 };
