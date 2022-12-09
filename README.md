@@ -78,14 +78,20 @@ await ghf.doIFollowThem(username);
 await ghf.doTheyFollowMe(username);
 ```
 
-- Unfollow those who are not following you
+- Unfollow those who are not following you (Loops over all who you follow, slow)
 
 ```
 await ghf.unfollowNonFollowers();
 ```
 
-- Follow all your followers
+- Follow all your followers (Loops over all your followers, slow)
 
 ```
 await ghf.followFollowers();
+```
+
+- Follow only those who follow you (Caches your followers, fast)
+
+```
+await ghf.update();
 ```
