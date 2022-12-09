@@ -88,9 +88,7 @@ exports.GHFollow = class GHFollow {
 
   getAllFollowers = async () => {
     console.log("Getting all those who follow you...");
-    const res = await this.getAll(this.followers);
-    this.writeJson('followers', res);
-    return res;
+    return await this.getAll(this.followers);
   };
 
   getAllFollowing = async () => {
