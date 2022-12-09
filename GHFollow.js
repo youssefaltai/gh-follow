@@ -139,4 +139,25 @@ exports.GHFollow = class GHFollow {
   readJson = (filename) => {
     return JSON.parse(fs.readFileSync(`${filename}.json`));
   };
+
+  update = async () => {
+    const currentFollowers = await this.getAllFollowers();
+    const previousFollowers = this.readJson("followers");
+  
+    for (const previousFollower of previousFollowers) {
+      if (!currentFollowers.includes(previousFollower)) {
+        console.log(`${previousFollower} unfollowed you`);
+        await this.unfollow(previousFollower);
+      }
+    }
+  
+    for (const currentFollower of currentFollowers) {
+      if (!previousFollowers.includes(currentFollower)) {
+        console.log(`${currentFollower} started following you`);
+        await this.follow(currentFollower);
+      }
+    }
+  
+    this.writeJson("followers", currentFollowers);
+  };
 };
