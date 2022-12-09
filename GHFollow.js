@@ -1,4 +1,5 @@
 const axios = require("axios");
+const fs = require("fs");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -129,5 +130,13 @@ exports.GHFollow = class GHFollow {
     for (let i = 0; i < allFollowers.length; i++) {
       await this.follow(allFollowers[i]);
     }
+  };
+
+  writeJson = (filename, data) => {
+    fs.writeFile(`${filename}.json`, JSON.stringify(data));
+  };
+
+  readJson = (filename) => {
+    return JSON.parse(fs.readFile(`${filename}.json`));
   };
 };
