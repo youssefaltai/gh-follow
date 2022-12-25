@@ -40,6 +40,14 @@ Then, create an instance of `GHFollow`, and pass it your GitHub username
 const ghf = new GHFollow("youssef-attai");
 ```
 
+Before you start using the methods, you should call the `init()`
+method, it loads the followers and following data to be used
+by other methods.
+
+```
+await ghf.init();
+```
+
 Now, here is a list of what you can do
 
 - Get the usernames of your followers
@@ -78,19 +86,19 @@ await ghf.doIFollowThem(username);
 await ghf.doTheyFollowMe(username);
 ```
 
-- Unfollow those who are not following you (Loops over all who you follow, slow)
+- Unfollow those who are not following you
 
 ```
 await ghf.unfollowNonFollowers();
 ```
 
-- Follow all your followers (Loops over all your followers, slow)
+- Follow all your followers
 
 ```
 await ghf.followFollowers();
 ```
 
-- Follow only those who follow you (Caches your followers, fast)
+- Follow only those who follow you
 
 ```
 await ghf.update();
