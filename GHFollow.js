@@ -116,20 +116,18 @@ exports.GHFollow = class GHFollow {
 
   unfollowNonFollowers = async () => {
     const allFollowing = await this.getAll(this.following);
+    const allFollowers = await this.getAll(this.followers);
 
-    for (let i = 0; i < allFollowing.length; i++) {
-      if (!(await this.doTheyFollowMe(allFollowing[i]))) {
+    for (let i = 0; i < allFollowing.length; i++)
+      if (!allFollowers.includes(allFollowing[i]))
         await this.unfollow(allFollowing[i]);
-      }
-    }
   };
 
   followFollowers = async () => {
     const allFollowers = await this.getAll(this.followers);
 
-    for (let i = 0; i < allFollowers.length; i++) {
+    for (let i = 0; i < allFollowers.length; i++)
       await this.follow(allFollowers[i]);
-    }
   };
 
   writeJson = (filename, data) => {
@@ -141,29 +139,17 @@ exports.GHFollow = class GHFollow {
   };
 
   update = async () => {
-    const currentFollowers = await this.getAllFollowers();
-    let previousFollowers;
-    try {
-      previousFollowers = this.readJson("followers");
-    } catch (err) {
-      this.writeJson("followers", currentFollowers);
-      previousFollowers = this.readJson("followers");
+    const allFollowing = await this.getAll(this.following);
+    const allFollowers = await this.getAll(this.followers);
+
+    for (let i = 0; i < allFollowing.length; i++) {
+      if (!allFollowers.includes(allFollowing[i]))
+        await this.unfollow(allFollowing[i]);
     }
 
-    for (const previousFollower of previousFollowers) {
-      if (!currentFollowers.includes(previousFollower)) {
-        console.log(`${previousFollower} unfollowed you`);
-        await this.unfollow(previousFollower);
-      }
+    for (let i = 0; i < allFollowers.length; i++) {
+      if (!allFollowing.includes(allFollowers[i]))
+        await this.follow(allFollowers[i]);
     }
-
-    for (const currentFollower of currentFollowers) {
-      if (!previousFollowers.includes(currentFollower)) {
-        console.log(`${currentFollower} started following you`);
-        await this.follow(currentFollower);
-      }
-    }
-
-    this.writeJson("followers", currentFollowers);
   };
 };
