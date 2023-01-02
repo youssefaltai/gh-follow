@@ -27,7 +27,7 @@ Now, import the `GHFollow` class using:
 import { GHFollow } from "ghfollow";
 ```
 
-or (For CommonJS)
+or (for CommonJS)
 
 ```
 const { GHFollow } = require("ghfollow");
