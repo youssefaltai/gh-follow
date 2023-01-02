@@ -12,11 +12,10 @@ npm i ghfollow
 
 Then, make an environment variable named `GH_FOLLOW` and set it's value to your [GitHub personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token). **(Make sure you check `user:follow` when generating your token)**
 
-One way of making an environment variable is to add it to a file named `.env` in your project's working directory. Your `.env` file should look something like this:
+One way of making an environment variable is to add it to a file named `.env` in your project's working directory.
+Your `.env` file should have the following line somewhere:
 
 ```
-ENVIRONMENT_VARIALE_1=SOME_VALUE
-ENVIRONMENT_VARIALE_2=SOME_OTHER_VALUE
 GH_FOLLOW=<YOUR_PERSONAL_ACCESS_TOKEN>
 ```
 
