@@ -1,6 +1,6 @@
 # GHFollow
 
-For those who are obsessed with their GitHub followers.
+Manage your GitHub followers.
 
 ### How to use
 
